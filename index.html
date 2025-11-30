@@ -3,7 +3,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2248 數字合併遊戲</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -49,8 +49,6 @@
         background-image: 
             radial-gradient(ellipse at top left, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
             radial-gradient(ellipse at bottom right, rgba(243, 156, 18, 0.1) 0%, transparent 50%);
-        touch-action: none;
-        overflow: hidden;
     }
 
     .game-container {
@@ -68,7 +66,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .title {
@@ -84,63 +82,28 @@
 
     .scores {
         display: flex;
-        gap: 12px;
+        gap: 15px;
     }
 
     .score-box {
         background: var(--bg-card);
-        padding: 8px 16px;
+        padding: 10px 20px;
         border-radius: 12px;
         text-align: center;
-        min-width: 80px;
+        min-width: 90px;
     }
 
     .score-label {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 1px;
     }
 
     .score-value {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--text-primary);
-    }
-
-    .status-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        padding: 12px 16px;
-        background: var(--bg-card);
-        border-radius: 12px;
-    }
-
-    .shuffle-info {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-    }
-
-    .shuffle-icon {
-        font-size: 1.2rem;
-    }
-
-    .shuffle-count {
-        color: var(--accent-warm);
-        font-weight: 700;
-    }
-
-    .mode-indicator {
-        font-size: 0.8rem;
-        color: var(--accent-gold);
-        padding: 6px 12px;
-        background: rgba(233, 69, 96, 0.2);
-        border-radius: 20px;
     }
 
     .game-board {
@@ -150,9 +113,8 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         aspect-ratio: 1;
-        touch-action: none;
     }
 
     .tile {
@@ -223,24 +185,12 @@
         100% { transform: scale(1); }
     }
 
-    @keyframes shuffle {
-        0% { transform: rotate(0deg) scale(1); }
-        25% { transform: rotate(-10deg) scale(0.9); }
-        50% { transform: rotate(10deg) scale(0.9); }
-        75% { transform: rotate(-5deg) scale(0.95); }
-        100% { transform: rotate(0deg) scale(1); }
-    }
-
     .tile.new {
         animation: pop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .tile.merged {
         animation: merge 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .game-board.shuffling .tile {
-        animation: shuffle 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .controls {
@@ -253,10 +203,10 @@
     .btn {
         background: var(--bg-card);
         border: none;
-        padding: 14px 24px;
+        padding: 14px 28px;
         border-radius: 12px;
         color: var(--text-primary);
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 700;
         cursor: pointer;
         transition: all 0.2s ease;
@@ -269,17 +219,6 @@
         box-shadow: 0 10px 20px rgba(233, 69, 96, 0.3);
     }
 
-    .btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .btn:disabled:hover {
-        background: var(--bg-card);
-        box-shadow: none;
-    }
-
     .btn-primary {
         background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
     }
@@ -289,10 +228,10 @@
     }
 
     .instructions {
-        margin-top: 20px;
+        margin-top: 25px;
         text-align: center;
         color: var(--text-secondary);
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         line-height: 1.6;
     }
 
@@ -355,35 +294,6 @@
         z-index: 10;
     }
 
-    .shuffle-notice {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(243, 156, 18, 0.95);
-        color: #fff;
-        padding: 20px 40px;
-        border-radius: 16px;
-        font-size: 1.3rem;
-        font-weight: 700;
-        z-index: 50;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        text-align: center;
-    }
-
-    .shuffle-notice.show {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .shuffle-notice .remaining {
-        font-size: 0.9rem;
-        margin-top: 8px;
-        opacity: 0.9;
-    }
-
     @media (max-width: 480px) {
         .game-container {
             padding: 20px;
@@ -405,19 +315,11 @@
             font-size: 1rem;
         }
         .score-box {
-            padding: 6px 12px;
-            min-width: 65px;
+            padding: 8px 14px;
+            min-width: 70px;
         }
         .score-value {
-            font-size: 1.1rem;
-        }
-        .status-bar {
-            flex-direction: column;
-            gap: 8px;
-        }
-        .btn {
-            padding: 12px 18px;
-            font-size: 0.85rem;
+            font-size: 1.2rem;
         }
     }
 </style>
@@ -441,34 +343,17 @@
         </div>
 
 ```
-    <div class="status-bar">
-        <div class="shuffle-info">
-            <span class="shuffle-icon">🔀</span>
-            <span>洗牌次數：<span class="shuffle-count" id="shuffleCount">3</span></span>
-        </div>
-        <div class="mode-indicator" id="modeIndicator">點擊 / 滑動</div>
-    </div>
-
     <div class="game-board" id="board"></div>
 
     <div class="controls">
         <button class="btn btn-primary" onclick="newGame()">新遊戲</button>
         <button class="btn" onclick="undoMove()">復原</button>
-        <button class="btn" onclick="manualShuffle()" id="shuffleBtn">手動洗牌</button>
     </div>
 
     <div class="instructions">
-        <p><strong>玩法說明：</strong></p>
-        <p>📱 滑動：往任意方向滑動合併相同數字</p>
-        <p>👆 點擊：點選相鄰的相同數字方塊合併</p>
-        <p>⌨️ 鍵盤：使用方向鍵操作</p>
-        <p>🔀 卡住時自動洗牌，最多3次機會</p>
+        <p><strong>玩法說明：</strong>點擊相鄰的相同數字方塊進行合併</p>
+        <p>連續合併相同數字，挑戰更高分數！</p>
     </div>
-</div>
-
-<div class="shuffle-notice" id="shuffleNotice">
-    <div>🔀 自動洗牌中...</div>
-    <div class="remaining">剩餘 <span id="shuffleRemaining">2</span> 次機會</div>
 </div>
 
 <div class="game-over-overlay" id="gameOverOverlay">
@@ -481,202 +366,15 @@
 
 <script>
     const GRID_SIZE = 4;
-    const MAX_SHUFFLES = 3;
     let board = [];
     let score = 0;
     let bestScore = parseInt(localStorage.getItem('best2248') || '0');
     let selectedTile = null;
     let previousState = null;
-    let shufflesRemaining = MAX_SHUFFLES;
-    let isAnimating = false;
-
-    // 觸控/滑動相關變數
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
-    const SWIPE_THRESHOLD = 50;
 
     function init() {
         document.getElementById('best').textContent = bestScore;
-        setupSwipeListeners();
-        setupKeyboardListeners();
         newGame();
-    }
-
-    function setupSwipeListeners() {
-        const boardEl = document.getElementById('board');
-        
-        boardEl.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        boardEl.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].clientX;
-            touchEndY = e.changedTouches[0].clientY;
-            handleSwipe();
-        }, { passive: true });
-
-        // 滑鼠拖曳支援（桌面版）
-        let mouseDown = false;
-        boardEl.addEventListener('mousedown', (e) => {
-            mouseDown = true;
-            touchStartX = e.clientX;
-            touchStartY = e.clientY;
-        });
-
-        document.addEventListener('mouseup', (e) => {
-            if (mouseDown) {
-                mouseDown = false;
-                touchEndX = e.clientX;
-                touchEndY = e.clientY;
-                handleSwipe();
-            }
-        });
-    }
-
-    function setupKeyboardListeners() {
-        document.addEventListener('keydown', (e) => {
-            if (isAnimating) return;
-            
-            switch(e.key) {
-                case 'ArrowUp':
-                    e.preventDefault();
-                    move('up');
-                    break;
-                case 'ArrowDown':
-                    e.preventDefault();
-                    move('down');
-                    break;
-                case 'ArrowLeft':
-                    e.preventDefault();
-                    move('left');
-                    break;
-                case 'ArrowRight':
-                    e.preventDefault();
-                    move('right');
-                    break;
-            }
-        });
-    }
-
-    function handleSwipe() {
-        if (isAnimating) return;
-        
-        const diffX = touchEndX - touchStartX;
-        const diffY = touchEndY - touchStartY;
-        
-        if (Math.abs(diffX) < SWIPE_THRESHOLD && Math.abs(diffY) < SWIPE_THRESHOLD) {
-            return; // 不是滑動，可能是點擊
-        }
-
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            // 水平滑動
-            if (diffX > 0) {
-                move('right');
-            } else {
-                move('left');
-            }
-        } else {
-            // 垂直滑動
-            if (diffY > 0) {
-                move('down');
-            } else {
-                move('up');
-            }
-        }
-    }
-
-    function move(direction) {
-        if (isAnimating) return;
-        
-        saveState();
-        let moved = false;
-        let mergeScore = 0;
-
-        // 根據方向處理合併
-        if (direction === 'left') {
-            for (let r = 0; r < GRID_SIZE; r++) {
-                const result = mergeLine(board[r]);
-                if (result.moved) moved = true;
-                mergeScore += result.score;
-                board[r] = result.line;
-            }
-        } else if (direction === 'right') {
-            for (let r = 0; r < GRID_SIZE; r++) {
-                const reversed = [...board[r]].reverse();
-                const result = mergeLine(reversed);
-                if (result.moved) moved = true;
-                mergeScore += result.score;
-                board[r] = result.line.reverse();
-            }
-        } else if (direction === 'up') {
-            for (let c = 0; c < GRID_SIZE; c++) {
-                const column = board.map(row => row[c]);
-                const result = mergeLine(column);
-                if (result.moved) moved = true;
-                mergeScore += result.score;
-                for (let r = 0; r < GRID_SIZE; r++) {
-                    board[r][c] = result.line[r];
-                }
-            }
-        } else if (direction === 'down') {
-            for (let c = 0; c < GRID_SIZE; c++) {
-                const column = board.map(row => row[c]).reverse();
-                const result = mergeLine(column);
-                if (result.moved) moved = true;
-                mergeScore += result.score;
-                const newColumn = result.line.reverse();
-                for (let r = 0; r < GRID_SIZE; r++) {
-                    board[r][c] = newColumn[r];
-                }
-            }
-        }
-
-        if (moved) {
-            score += mergeScore;
-            addRandomTile();
-            updateDisplay();
-            checkGameState();
-        } else {
-            previousState = null; // 沒移動就不保存狀態
-        }
-    }
-
-    function mergeLine(line) {
-        let moved = false;
-        let mergeScore = 0;
-        
-        // 移除零並壓縮
-        let filtered = line.filter(x => x !== 0);
-        
-        // 合併相鄰相同的數字
-        for (let i = 0; i < filtered.length - 1; i++) {
-            if (filtered[i] === filtered[i + 1]) {
-                filtered[i] *= 2;
-                mergeScore += filtered[i];
-                filtered.splice(i + 1, 1);
-                moved = true;
-            }
-        }
-        
-        // 補零到原長度
-        while (filtered.length < GRID_SIZE) {
-            filtered.push(0);
-        }
-        
-        // 檢查是否有移動
-        if (!moved) {
-            for (let i = 0; i < GRID_SIZE; i++) {
-                if (line[i] !== filtered[i]) {
-                    moved = true;
-                    break;
-                }
-            }
-        }
-        
-        return { line: filtered, moved, score: mergeScore };
     }
 
     function newGame() {
@@ -684,8 +382,6 @@
         score = 0;
         selectedTile = null;
         previousState = null;
-        shufflesRemaining = MAX_SHUFFLES;
-        isAnimating = false;
         
         // 初始填入一些數字
         for (let i = 0; i < 8; i++) {
@@ -693,7 +389,6 @@
         }
         
         updateDisplay();
-        updateShuffleDisplay();
         hideGameOver();
     }
 
@@ -718,8 +413,7 @@
     function saveState() {
         previousState = {
             board: board.map(row => [...row]),
-            score: score,
-            shufflesRemaining: shufflesRemaining
+            score: score
         };
     }
 
@@ -727,11 +421,9 @@
         if (previousState) {
             board = previousState.board.map(row => [...row]);
             score = previousState.score;
-            shufflesRemaining = previousState.shufflesRemaining;
             previousState = null;
             selectedTile = null;
             updateDisplay();
-            updateShuffleDisplay();
         }
     }
 
@@ -765,13 +457,8 @@
         }
     }
 
-    function updateShuffleDisplay() {
-        document.getElementById('shuffleCount').textContent = shufflesRemaining;
-        document.getElementById('shuffleBtn').disabled = shufflesRemaining <= 0;
-    }
-
     function handleTileClick(row, col) {
-        if (isAnimating || board[row][col] === 0) return;
+        if (board[row][col] === 0) return;
         
         const tiles = document.querySelectorAll('.tile');
         const index = row * GRID_SIZE + col;
@@ -805,12 +492,13 @@
                 const newTiles = document.querySelectorAll('.tile');
                 newTiles[newIndex].classList.add('merged');
                 
-                isAnimating = true;
                 setTimeout(() => {
                     fillEmptySpaces();
                     updateDisplay();
-                    isAnimating = false;
-                    checkGameState();
+                    
+                    if (isGameOver()) {
+                        showGameOver();
+                    }
                 }, 150);
             } else {
                 selectedTile = { row, col };
@@ -853,110 +541,17 @@
         }
     }
 
-    function checkGameState() {
-        if (!hasValidMoves()) {
-            if (shufflesRemaining > 0) {
-                autoShuffle();
-            } else {
-                showGameOver();
-            }
-        }
-    }
-
-    function hasValidMoves() {
-        // 檢查是否有相鄰的相同數字
+    function isGameOver() {
         for (let r = 0; r < GRID_SIZE; r++) {
             for (let c = 0; c < GRID_SIZE; c++) {
                 const val = board[r][c];
-                if (val === 0) return true;
-                if (c < GRID_SIZE - 1 && board[r][c + 1] === val) return true;
-                if (r < GRID_SIZE - 1 && board[r + 1][c] === val) return true;
+                // 檢查右邊
+                if (c < GRID_SIZE - 1 && board[r][c + 1] === val) return false;
+                // 檢查下面
+                if (r < GRID_SIZE - 1 && board[r + 1][c] === val) return false;
             }
         }
-        return false;
-    }
-
-    function autoShuffle() {
-        shufflesRemaining--;
-        updateShuffleDisplay();
-        
-        // 顯示洗牌提示
-        const notice = document.getElementById('shuffleNotice');
-        document.getElementById('shuffleRemaining').textContent = shufflesRemaining;
-        notice.classList.add('show');
-        
-        // 執行洗牌動畫
-        const boardEl = document.getElementById('board');
-        boardEl.classList.add('shuffling');
-        
-        isAnimating = true;
-        
-        setTimeout(() => {
-            shuffleBoard();
-            updateDisplay();
-            boardEl.classList.remove('shuffling');
-            notice.classList.remove('show');
-            isAnimating = false;
-            
-            // 洗牌後再次檢查
-            if (!hasValidMoves()) {
-                if (shufflesRemaining > 0) {
-                    setTimeout(() => autoShuffle(), 300);
-                } else {
-                    showGameOver();
-                }
-            }
-        }, 600);
-    }
-
-    function manualShuffle() {
-        if (shufflesRemaining <= 0 || isAnimating) return;
-        
-        saveState();
-        shufflesRemaining--;
-        updateShuffleDisplay();
-        
-        const boardEl = document.getElementById('board');
-        boardEl.classList.add('shuffling');
-        
-        isAnimating = true;
-        
-        setTimeout(() => {
-            shuffleBoard();
-            updateDisplay();
-            boardEl.classList.remove('shuffling');
-            isAnimating = false;
-        }, 500);
-    }
-
-    function shuffleBoard() {
-        // 收集所有非零數字
-        const values = [];
-        for (let r = 0; r < GRID_SIZE; r++) {
-            for (let c = 0; c < GRID_SIZE; c++) {
-                if (board[r][c] !== 0) {
-                    values.push(board[r][c]);
-                }
-            }
-        }
-        
-        // Fisher-Yates 洗牌算法
-        for (let i = values.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [values[i], values[j]] = [values[j], values[i]];
-        }
-        
-        // 重新填入
-        let idx = 0;
-        for (let r = 0; r < GRID_SIZE; r++) {
-            for (let c = 0; c < GRID_SIZE; c++) {
-                if (idx < values.length) {
-                    board[r][c] = values[idx++];
-                } else {
-                    board[r][c] = 0;
-                }
-            }
-        }
+        return true;
     }
 
     function showGameOver() {
